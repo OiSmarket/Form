@@ -8,7 +8,7 @@
 </head>
 <body>
     <form id="landingForm">
-        <label for="name">Name:</label>
+        <label for="name">NaМe:</label>
         <input type="text" id="name" name="Name" required><br><br>
 
         <label for="email">Email:</label>
@@ -54,16 +54,24 @@
 
             fetch('https://script.google.com/macros/s/AKfycbzvgh123456789/exec', {
                 method: 'POST',
-                mode: 'no-cors', // Добавлен режим 'no-cors'
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(formData)
             })
             .then(response => {
-                // В режиме 'no-cors' ответ будет "opaque", и мы не сможем получить доступ к его содержимому.
-                alert('Form submitted successfully!');
-                console.log('Form data submitted:', formData);
+                if (!response.ok) {
+                    throw new Error(`Network response was not ok. Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.result && data.result === 'success') {
+                    alert('Form submitted successfully!');
+                } else {
+                    throw new Error('Form submission failed with response: ' + JSON.stringify(data));
+                }
+                console.log(data);
             })
             .catch(error => {
                 alert('Error submitting form. Please try again. Check console for details.');
