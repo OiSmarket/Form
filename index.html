@@ -8,7 +8,7 @@
 </head>
 <body>
     <form id="landingForm">
-        <label for="name">NaMe:</label>
+        <label for="name">Name:</label>
         <input type="text" id="name" name="Name" required><br><br>
 
         <label for="email">Email:</label>
@@ -54,38 +54,21 @@
 
             fetch('https://script.google.com/macros/s/AKfycbzvgh123456789/exec', {
                 method: 'POST',
+                mode: 'no-cors', // Добавлен режим 'no-cors'
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(formData)
             })
             .then(response => {
-                if (!response.ok) {
-                    throw new Error(`Network response was not ok. Status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (data.result && data.result === 'success') {
-                    alert('Form submitted successfully!');
-                } else {
-                    throw new Error('Form submission failed with response: ' + JSON.stringify(data));
-                }
-                console.log(data);
+                // В режиме 'no-cors' ответ будет "opaque", и мы не сможем получить доступ к его содержимому.
+                alert('Form submitted successfully!');
+                console.log('Form data submitted:', formData);
             })
             .catch(error => {
                 alert('Error submitting form. Please try again. Check console for details.');
                 console.error('Error:', error);
                 console.error('Form Data:', formData);
-
-                // Adding more detailed error information
-                if (error.message.includes('Network response was not ok')) {
-                    console.error('It seems like there is an issue with the network or the server URL. Please ensure the script URL is correct and the server is accessible.');
-                } else if (error.message.includes('Form submission failed')) {
-                    console.error('The server responded, but there was an issue with the form data. Please verify the form fields and ensure all required fields are filled out correctly.');
-                } else {
-                    console.error('An unexpected error occurred. Please verify your network connection and try again.');
-                }
             });
         }
     </script>
