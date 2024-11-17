@@ -8,7 +8,7 @@
 </head>
 <body>
     <form id="landingForm">
-        <label for="name">Name:</label>
+        <label for="name">NaMe:</label>
         <input type="text" id="name" name="Name" required><br><br>
 
         <label for="email">Email:</label>
@@ -74,8 +74,18 @@
                 console.log(data);
             })
             .catch(error => {
-                alert('Error submitting form. Please try again.');
+                alert('Error submitting form. Please try again. Check console for details.');
                 console.error('Error:', error);
+                console.error('Form Data:', formData);
+
+                // Adding more detailed error information
+                if (error.message.includes('Network response was not ok')) {
+                    console.error('It seems like there is an issue with the network or the server URL. Please ensure the script URL is correct and the server is accessible.');
+                } else if (error.message.includes('Form submission failed')) {
+                    console.error('The server responded, but there was an issue with the form data. Please verify the form fields and ensure all required fields are filled out correctly.');
+                } else {
+                    console.error('An unexpected error occurred. Please verify your network connection and try again.');
+                }
             });
         }
     </script>
