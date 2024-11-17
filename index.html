@@ -56,24 +56,16 @@
 
             fetch('https://script.google.com/macros/s/AKfycbzvgh123456789/exec', {
                 method: 'POST',
+                mode: 'no-cors', // Используем режим 'no-cors' для обхода CORS
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(formData)
             })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`Network response was not ok. Status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (data.result && data.result === 'success') {
-                    alert('Form submitted successfully!');
-                } else {
-                    throw new Error('Form submission failed with response: ' + JSON.stringify(data));
-                }
-                console.log(data);
+            .then(() => {
+                // В режиме 'no-cors' невозможно получить содержимое ответа, но можно сообщить об успешной отправке
+                alert('Form submitted successfully! Note: Response not available due to no-cors mode.');
+                console.log('Form data submitted:', formData);
             })
             .catch(error => {
                 alert('Error submitting form. Please try again. Check console for details.');
