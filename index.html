@@ -8,7 +8,7 @@
 </head>
 <body>
     <form id="landingForm">
-        <label for="name">NaМe:</label>
+        <label for="name">Name:</label>
         <input type="text" id="name" name="Name" required><br><br>
 
         <label for="email">Email:</label>
@@ -35,10 +35,12 @@
         <label for="experience">Experience:</label><br>
         <textarea id="experience" name="experience" rows="4" cols="50"></textarea><br><br>
 
-        <button type="button" onclick="submitForm()">Submit</button>
+        <button type="button" id="submitBtn">Submit</button>
     </form>
 
     <script>
+        document.getElementById('submitBtn').addEventListener('click', submitForm);
+
         function submitForm() {
             const formData = {
                 name: document.getElementById('name').value,
